@@ -17,7 +17,6 @@ class _loginScreenState extends State<loginScreen> {
   bool _validatepass = false;
   bool _passwordVisible = true;
 
-
   @override
   Widget build(BuildContext context) {
 

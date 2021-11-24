@@ -16,6 +16,8 @@ class _SignUpState extends State<SignUp> {
   bool _validatePass = false;
   bool _validatePass2 = false;
   String? _pass;
+  bool _passwordVisible = true;
+  bool _passwordVisible1 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +67,23 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.only(left: 30, top: 20, right: 30),
                   child: SizedBox(
                     child: TextField(
+                      obscureText: _passwordVisible,
                       decoration: InputDecoration(
                         hintText: "Enter your password",
                         prefixIcon: new Icon(Icons.vpn_key, color: Colors.deepPurple,),
                         errorText: _validatePass ? 'Invalid Password' : null,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                              color: Colors.deepPurple,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+
+                          )
                       ),
                       onChanged: (text) {
                         setState(() {
@@ -83,10 +98,23 @@ class _SignUpState extends State<SignUp> {
                   padding: EdgeInsets.only(left: 30, top: 20, right: 30),
                   child: SizedBox(
                     child: TextField(
+                      obscureText: _passwordVisible1,
                       decoration: InputDecoration(
                         hintText: "Re-enter your password",
                         prefixIcon: new Icon(Icons.vpn_key, color: Colors.deepPurple,),
                         errorText: _validatePass2 ? 'Not Match' : null,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible1 ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                              color: Colors.deepPurple,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible1 = !_passwordVisible1;
+                              });
+                            },
+
+                          )
                       ),
                       onChanged: (text) {
                         setState(() {
