@@ -10,11 +10,17 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  bool _validateEmail = false;
+  bool _validateUser = false;
+  bool _validatePass = false;
+  bool _validatePass2 = false;
+  String? _pass;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-
+      body: SingleChildScrollView(
           child: Column(
               children: [
                 Container(
@@ -28,7 +34,13 @@ class _SignUpState extends State<SignUp> {
                     decoration: InputDecoration(
                       hintText: "Pick your username",
                       prefixIcon: new Icon(Icons.alternate_email, color: Colors.deepPurple,),
+                      errorText: _validateUser ? 'Invalid Username' : null,
                     ),
+                    onChanged: (text) {
+                      setState(() {
+                        RegExp('^(?=.*?[!@#\$&*~])').hasMatch(text) ? _validateUser = true : _validateUser = false;
+                      });
+                    },
                   ),
                 ),
                 Container(
@@ -38,7 +50,14 @@ class _SignUpState extends State<SignUp> {
                       decoration: InputDecoration(
                         hintText: "Enter your email address", fillColor: Colors.deepPurple,
                         prefixIcon: new Icon(Icons.email_outlined, color: Colors.deepPurple,),
+                        errorText: _validateEmail ? 'Invalid Email' : null,
                       ),
+                      onChanged: (text) {
+                        setState(() {
+                          !RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z.-]").hasMatch(text) ? _validateEmail = true : _validateEmail = false;
+                        });
+                      },
+
                     ),
                   ),
                 ),
@@ -47,9 +66,16 @@ class _SignUpState extends State<SignUp> {
                   child: SizedBox(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Enter your password", fillColor: Colors.deepPurple,
+                        hintText: "Enter your password",
                         prefixIcon: new Icon(Icons.vpn_key, color: Colors.deepPurple,),
+                        errorText: _validatePass ? 'Invalid Password' : null,
                       ),
+                      onChanged: (text) {
+                        setState(() {
+                          RegExp('^(?=.*?[!@#\$&*~])').hasMatch(text) ? _validatePass = true : _validatePass = false;
+                        });
+                        _pass = text;
+                      },
                     ),
                   ),
                 ),
@@ -58,9 +84,15 @@ class _SignUpState extends State<SignUp> {
                   child: SizedBox(
                     child: TextField(
                       decoration: InputDecoration(
-                        hintText: "Re-enter your password", fillColor: Colors.deepPurple,
+                        hintText: "Re-enter your password",
                         prefixIcon: new Icon(Icons.vpn_key, color: Colors.deepPurple,),
+                        errorText: _validatePass2 ? 'Not Match' : null,
                       ),
+                      onChanged: (text) {
+                        setState(() {
+                          (_pass != text) ? _validatePass2 = true : _validatePass2 = false;
+                        });
+                      },
                     ),
                   ),
                 ),

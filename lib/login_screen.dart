@@ -13,6 +13,10 @@ class loginScreen extends StatefulWidget {
 class _loginScreenState extends State<loginScreen> {
 
   bool isChecked = false;
+  bool _validateuser = false;
+  bool _validatepass = false;
+  bool _passwordVisible = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,7 @@ class _loginScreenState extends State<loginScreen> {
     }
 
     return Scaffold(
-      body: Container(
-
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -45,17 +48,44 @@ class _loginScreenState extends State<loginScreen> {
                 decoration: InputDecoration(
                   hintText: "username",
                   prefixIcon: new Icon(Icons.alternate_email, color: Colors.deepPurple,),
+                  errorText: _validateuser ? 'Invalid Username' : null,
                 ),
+                onChanged: (text) {
+                  setState(() {
+                    RegExp('^(?=.*?[!@#\$&*~])').hasMatch(text) ? _validateuser = true : _validateuser = false;
+                    // validateEmail(text) ? _validate = true : _validate = false;
+                  });
+                },
               ),
             ),
             Container(
               padding: EdgeInsets.only(left: 30, top: 20, right: 30),
               child: SizedBox(
                 child: TextField(
+                  obscureText: _passwordVisible,
                   decoration: InputDecoration(
                     hintText: "password", fillColor: Colors.deepPurple,
                     prefixIcon: new Icon(Icons.vpn_key, color: Colors.deepPurple,),
+                    errorText: _validatepass ? 'Invalid Password' : null,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible ? Icons.remove_red_eye : Icons.remove_red_eye_outlined,
+                        color: Colors.deepPurple,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+
+                    )
                   ),
+                  onChanged: (text) {
+                    setState(() {
+                      RegExp('^(?=.*?[!@#\$&*~])').hasMatch(text) ? _validatepass = true : _validatepass = false;
+                      // validateEmail(text) ? _validate = true : _validate = false;
+                    });
+                  },
                 ),
               ),
             ),
@@ -119,7 +149,8 @@ class _loginScreenState extends State<loginScreen> {
                         )
                       )
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                      },
                     ),
                   ),
                   Container(

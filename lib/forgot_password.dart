@@ -9,11 +9,13 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+
+  bool _validate = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-
+      body: SingleChildScrollView(
           child: Column(
               children: [
                 Container(
@@ -28,7 +30,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       decoration: InputDecoration(
                         hintText: "Enter your email address", fillColor: Colors.deepPurple,
                         prefixIcon: new Icon(Icons.email_outlined, color: Colors.deepPurple,),
+                        errorText: _validate ? 'Invalid Email' : null,
                       ),
+                      onChanged: (text) {
+                        setState(() {
+                          !RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z.-]").hasMatch(text) ? _validate = true : _validate = false;
+                          // validateEmail(text) ? _validate = true : _validate = false;
+                        });
+                      },
                     ),
                   ),
                 ),
